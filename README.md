@@ -3,7 +3,10 @@
 # Docker image that builds/extends `jupyter/all-spark-notebook` to include things I find useful.
 
 ## What's added?
-These are the configuration chnages made to Jupyter
+These are the configuration changes made to Jupyter:
+
+---
+
 * Everything from the source image `jupyter/all-spark-notebook` 
 * Custom CSS to make the Jupyter Notebook UI correctly full-screen.
 * Exasol client libraries
@@ -13,6 +16,7 @@ These are the configuration chnages made to Jupyter
 	* QGrid
 	* NBExtension
 
+Example of the `Dockerfile` being used here to extend the base image.
 ```dockerfile
 FROM jupyter/all-spark-notebook
 
@@ -82,7 +86,7 @@ docker run \
 	-p 8888:8888 \
 	scr512/jupyter-all-spark-notebook-plus \
 	start-notebook.sh --NotebookApp.password='sha1:f0c38ca1a943:b8c2f5b9c49dce6ad941776900950bae146e0f2b'
-	 
 ```
+### Changing the default password
 If you'd like to change this password, you can follow the documentation here:
 https://jupyter-notebook.readthedocs.io/en/stable/public_server.html#preparing-a-hashed-password
