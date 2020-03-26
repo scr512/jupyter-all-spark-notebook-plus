@@ -13,7 +13,7 @@ These are the configuration chnages made to Jupyter
 	* QGrid
 	* NBExtension
 
-```bash
+```dockerfile
 FROM jupyter/all-spark-notebook
 
 MAINTAINER Jason Davis <scr512@gmail.com>
