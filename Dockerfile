@@ -1,18 +1,21 @@
-## Purpose: Extend jupyter-all-spark-notebook to include all the fun things OR/DA uses.
-
 FROM jupyter/all-spark-notebook
-
-MAINTAINER Jason Davis <jason.davis@arm.com>
-
 # Setup environment
 WORKDIR /tmp
 
 # Gotta get back to root
 USER root
 
-# Install needed ODBC and ZLIB libraries
+# Install needed ODBC, ZLIB and OpenLDAP libraries
 RUN apt-get update; \
-        apt-get install -y unixodbc unixodbc-dev zlib1g-dev libmysqlclient-dev 
+        apt-get install -y \
+	unixodbc \
+	unixodbc-dev \
+	zlib1g-dev \
+	libmysqlclient-dev \
+	libldap-common \
+	libldap2-dev \
+	libsasl2-dev \
+	libsasl2-dev 
 
 # Grab Exasol libraries
 RUN wget https://www.exasol.com/support/secure/attachment/79656/EXASOL_ODBC-6.0.15.tar.gz; \
@@ -36,7 +39,9 @@ RUN conda install -c conda-forge -y \
 	pyexasol
 RUN pip install \ 
         mysql-connector \
-        sqlalchemy-exasol
+        sqlalchemy-exasol \
+	openpyxl \
+	python-ldap
 
 # Enable Jupyter extensions
 RUN jupyter contrib nbextension install --user; \
