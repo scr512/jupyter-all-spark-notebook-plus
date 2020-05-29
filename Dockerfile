@@ -23,6 +23,12 @@ RUN wget https://www.exasol.com/support/secure/attachment/79656/EXASOL_ODBC-6.0.
 	cp /tmp/EXASOL_ODBC-6.0.15/lib/linux/x86_64/* /usr/local/lib
 ADD ./etc/odbcinst.ini /etc/odbcinst.ini
 
+# Grab Elasticsearch libraries
+RUN wget https://artifacts.elastic.co/downloads/elasticsearch-hadoop/elasticsearch-hadoop-7.6.2.zip; \
+	unzip elasticsearch-hadoop-7.6.2.zip; \
+	mv /tmp/elasticsearch-hadoop-7.6.2 /home/jovyan/elasticsearch-hadoop-7.6.2; \
+	rm -f /home/jovyan/elasticsearch-hadoop-7.6.2.zip
+
 # Back to jovyan
 USER jovyan
 
