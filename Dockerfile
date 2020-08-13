@@ -47,7 +47,13 @@ RUN pip install \
         mysql-connector \
         sqlalchemy-exasol \
 	openpyxl \
-	python-ldap
+	python-ldap \
+        Office365-REST-Python-Client==2.1.4 \
+        pylint \
+        fbprophet
+
+RUN pip install \
+        sparkmonitor-s==0.0.11
 
 # Enable Jupyter extensions
 RUN jupyter contrib nbextension install --user; \
@@ -59,7 +65,11 @@ RUN jupyter contrib nbextension install --user; \
 	jupyter nbextension enable --sys-prefix --py hide_code; \
 	jupyter serverextension enable --sys-prefix --py hide_code; \
 	jupyter nbextension enable --py --sys-prefix qgrid; \
-	jupyter nbextension enable --py --sys-prefix widgetsnbextension
+	jupyter nbextension enable --py --sys-prefix widgetsnbextension; \
+        jupyter nbextension install sparkmonitor --py --user --symlink; \
+        jupyter nbextension enable sparkmonitor --py --user; \            
+        jupyter serverextension enable --py --user sparkmonitor; \
+        ipython profile create && echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py 
 
 # Configure Jupyter to not have the stupid boarders
 ADD ./jupyter/custom.css /home/jovyan/.jupyter/custom/custom.css
