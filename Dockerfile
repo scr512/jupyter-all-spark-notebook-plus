@@ -15,7 +15,7 @@ RUN apt-get update; \
 	libldap-common \
 	libldap2-dev \
 	libsasl2-dev \
-	libsasl2-dev 
+	cron 
 
 # Grab Exasol libraries
 RUN wget https://www.exasol.com/support/secure/attachment/79656/EXASOL_ODBC-6.0.15.tar.gz; \
