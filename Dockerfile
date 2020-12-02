@@ -1,4 +1,4 @@
-FROM jupyter/all-spark-notebook
+FROM jupyter/all-spark-notebook:5cfa60996e84
 # Setup environment
 WORKDIR /tmp
 
@@ -24,10 +24,10 @@ RUN wget https://www.exasol.com/support/secure/attachment/79656/EXASOL_ODBC-6.0.
 ADD ./etc/odbcinst.ini /etc/odbcinst.ini
 
 # Grab Elasticsearch libraries
-RUN wget https://artifacts.elastic.co/downloads/elasticsearch-hadoop/elasticsearch-hadoop-7.6.2.zip; \
-	unzip elasticsearch-hadoop-7.6.2.zip; \
-	mv /tmp/elasticsearch-hadoop-7.6.2 /home/jovyan/elasticsearch-hadoop-7.6.2; \
-	rm -f /home/jovyan/elasticsearch-hadoop-7.6.2.zip
+RUN wget https://artifacts.elastic.co/downloads/elasticsearch-hadoop/elasticsearch-hadoop-7.10.0.zip; \
+	unzip elasticsearch-hadoop-7.10.0.zip; \
+	mv /tmp/elasticsearch-hadoop-7.10.0 /home/jovyan/elasticsearch-hadoop-7.10.0; \
+	rm -f /home/jovyan/elasticsearch-hadoop-7.10.0.zip
 
 # Back to jovyan
 USER jovyan
