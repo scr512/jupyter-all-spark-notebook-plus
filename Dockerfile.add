@@ -1,0 +1,2 @@
+FROM scr512/jupyter-all-spark-notebook-plus:latest
+ENV PYTHONPATH=/usr/local/spark/python:/usr/local/spark/python/lib/py4j-0.10.9-src.zip

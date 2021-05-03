@@ -1,4 +1,4 @@
-FROM jupyter/all-spark-notebook:5cfa60996e84
+FROM jupyter/all-spark-notebook:584f43f06586
 # Setup environment
 WORKDIR /tmp
 
@@ -23,12 +23,6 @@ RUN wget https://www.exasol.com/support/secure/attachment/79656/EXASOL_ODBC-6.0.
 	cp /tmp/EXASOL_ODBC-6.0.15/lib/linux/x86_64/* /usr/local/lib
 ADD ./etc/odbcinst.ini /etc/odbcinst.ini
 
-# Grab Elasticsearch libraries
-RUN wget https://artifacts.elastic.co/downloads/elasticsearch-hadoop/elasticsearch-hadoop-7.10.0.zip; \
-	unzip elasticsearch-hadoop-7.10.0.zip; \
-	mv /tmp/elasticsearch-hadoop-7.10.0 /home/jovyan/elasticsearch-hadoop-7.10.0; \
-	rm -f /home/jovyan/elasticsearch-hadoop-7.10.0.zip
-
 # Back to jovyan
 USER jovyan
 
@@ -43,6 +37,12 @@ RUN conda install -c conda-forge -y \
 	sqlalchemy \
 	hdfs3 \
 	pyexasol
+RUN pip install \
+	convertdate \
+	lunarcalendar \
+	holidays \
+	pystan==2.19.1.1
+
 RUN pip install \ 
         mysql-connector \
         sqlalchemy-exasol \
@@ -51,9 +51,6 @@ RUN pip install \
         Office365-REST-Python-Client==2.1.4 \
         pylint \
         fbprophet
-
-RUN pip install \
-        sparkmonitor-s==0.0.11
 
 # Enable Jupyter extensions
 RUN jupyter contrib nbextension install --user; \
@@ -66,9 +63,6 @@ RUN jupyter contrib nbextension install --user; \
 	jupyter serverextension enable --sys-prefix --py hide_code; \
 	jupyter nbextension enable --py --sys-prefix qgrid; \
 	jupyter nbextension enable --py --sys-prefix widgetsnbextension; \
-        jupyter nbextension install sparkmonitor --py --user --symlink; \
-        jupyter nbextension enable sparkmonitor --py --user; \            
-        jupyter serverextension enable --py --user sparkmonitor; \
         ipython profile create && echo "c.InteractiveShellApp.extensions.append('sparkmonitor.kernelextension')" >>  $(ipython profile locate default)/ipython_kernel_config.py 
 
 # Configure Jupyter to not have the stupid boarders
